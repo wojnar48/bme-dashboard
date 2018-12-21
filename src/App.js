@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Paho from 'paho-mqtt';
 
 class App extends Component {
+  // TODO(SW): Move the client config into a separate file
   client = new Paho.Client(process.env.REACT_APP_MQTT_BROKER_URL, 3033, 'dashboard');
 
   state = {
