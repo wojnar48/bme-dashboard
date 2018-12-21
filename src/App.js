@@ -83,7 +83,7 @@ class App extends Component {
     const { thermometer, barometer, hygrometer } = this.state;
 
     return (
-      <React.Fragment>
+      <main>
         <CssBaseline />
         <AppBar position="static" color="default" className={classes.appBar}>
           <Toolbar>
@@ -92,7 +92,7 @@ class App extends Component {
             </Typography>
           </Toolbar>
         </AppBar>
-        <main className={classes.layout}>
+        <section className={classes.layout}>
           <Grid container justify='center' spacing={40}>
             <Grid item sm={6} md={4} lg={2}>
               <Card>
@@ -137,8 +137,8 @@ class App extends Component {
               </Card>
             </Grid>
           </Grid>
-        </main>
-      </React.Fragment>
+        </section>
+      </main>
     );
   }
 }
