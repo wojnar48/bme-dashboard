@@ -10,23 +10,20 @@ import Paho from 'paho-mqtt';
 import { Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
-const styles = (theme) => {
-  console.log(theme);
-  return {
-    layout: {
-      marginTop: theme.spacing.unit * 2,
-    },
-    appBar: {
-      position: 'relative',
-    },
-    toolbarTitle: {
-      flex: 1,
-    },
-    cardHeader: {
-      backgroundColor: theme.palette.grey[200],
-    }
+const styles = (theme) => ({
+  layout: {
+    marginTop: theme.spacing.unit * 2,
+  },
+  appBar: {
+    position: 'relative',
+  },
+  toolbarTitle: {
+    flex: 1,
+  },
+  cardHeader: {
+    backgroundColor: theme.palette.grey[200],
   }
-};
+});
 
 class App extends Component {
   // TODO(SW): Move the client config into a separate file
