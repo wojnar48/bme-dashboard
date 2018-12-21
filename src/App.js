@@ -106,7 +106,7 @@ class App extends Component {
     this.client.onConnectionLost = this.handleConnectionLost;
     this.client.onMessageArrived = this.handleIncomingMessage;
 
-    this.client.connect({ onSuccess: this.handleSuccessfulConnect, useSSL: false });
+    this.client.connect({ onSuccess: this.handleSuccessfulConnect, useSSL: true });
   }
 
   render() {
