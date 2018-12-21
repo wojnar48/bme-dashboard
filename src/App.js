@@ -2,17 +2,25 @@ import React, { Component } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paho from 'paho-mqtt';
 import { Typography } from '@material-ui/core';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import Gauge from 'react-svg-gauge';
 import { withStyles } from '@material-ui/core/styles';
+
+
+const theme = createMuiTheme({
+  typography: {
+    useNextVariants: true,
+  },
+});
 
 const styles = (theme) => ({
   layout: {
-    marginTop: theme.spacing.unit * 2,
+    marginTop: theme.spacing.unit * 8,
   },
   appBar: {
     position: 'relative',
@@ -22,8 +30,30 @@ const styles = (theme) => ({
   },
   cardHeader: {
     backgroundColor: theme.palette.grey[200],
+  },
+  gaugeValue: {
+    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    fontSize: '40px',
+    color: theme.palette.grey[400],
   }
 });
+
+const gaugeValueStyle =  {
+  fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+  fontSize: '30px',
+  fill: '#BDBDBD'
+};
+
+const topLabelStyle =  {
+  fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+  fontSize: '20px',
+  fill: '#BDBDBD'
+};
+
+const minMaxLabelStyle = {
+  fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+  fill: '#BDBDBD'
+};
 
 class App extends Component {
   // TODO(SW): Move the client config into a separate file
@@ -84,62 +114,75 @@ class App extends Component {
     const { thermometer, barometer, hygrometer } = this.state;
 
     return (
-      <main>
-        <CssBaseline />
-        <AppBar position="static" color="default" className={classes.appBar}>
-          <Toolbar>
-            <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
-              BME Dashboard
-            </Typography>
-          </Toolbar>
-        </AppBar>
-        <section className={classes.layout}>
-          <Grid container justify='center' spacing={40}>
-            <Grid item sm={6} md={4} lg={2}>
+      <MuiThemeProvider theme={theme}>
+        <main>
+          <CssBaseline />
+          <AppBar position="static" color="default" className={classes.appBar}>
+            <Toolbar>
+              <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
+                BME Dashboard
+              </Typography>
+            </Toolbar>
+          </AppBar>
+          <section className={classes.layout}>
+            <Grid container justify='center' spacing={40}>
               <Card>
-                <CardHeader
-                  className={classes.cardHeader}
-                  titleTypographyProps={{ align: 'center' }}
-                  title='Thermometer'
-                  />
                 <CardContent>
-                  <Typography gutterBottom variant='h5' component='h2' align='center'>
-                    {`${thermometer} Fahr`}
+                  <Gauge
+                    value={thermometer}
+                    color='#FFE082'
+                    label='Thermometer'
+                    width={300}
+                    height={200}
+                    valueLabelStyle={gaugeValueStyle}
+                    topLabelStyle={topLabelStyle}
+                    minMaxLabelStyle={minMaxLabelStyle}
+                  />
+                  <Typography color='textSecondary' component='p' align='center'>
+                    {`temperature (F)`}
+                  </Typography>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent>
+                  <Gauge
+                    value={barometer}
+                    color='#A5D6A7'
+                    label='Barometer'
+                    min={50}
+                    max={150}
+                    width={300}
+                    height={200}
+                    valueLabelStyle={gaugeValueStyle}
+                    topLabelStyle={topLabelStyle}
+                    minMaxLabelStyle={minMaxLabelStyle}
+                  />
+                  <Typography color='textSecondary' component='p' align='center'>
+                    {`pressure (kPa)`}
+                  </Typography>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent>
+                  <Gauge
+                    value={hygrometer}
+                    color='#81D4FA'
+                    label='Hygrometer'
+                    width={300}
+                    height={200}
+                    valueLabelStyle={gaugeValueStyle}
+                    topLabelStyle={topLabelStyle}
+                    minMaxLabelStyle={minMaxLabelStyle}
+                  />
+                  <Typography color='textSecondary' component='p' align='center'>
+                    {`humidity (%)`}
                   </Typography>
                 </CardContent>
               </Card>
             </Grid>
-            <Grid item sm={6} md={4} lg={2}>
-              <Card>
-                <CardHeader
-                  className={classes.cardHeader}
-                  titleTypographyProps={{ align: 'center' }}
-                  title='Barometer'
-                  />
-                <CardContent>
-                  <Typography gutterBottom variant='h5' component='h2' align='center'>
-                    {`${barometer} kPa`}
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid item sm={6} md={4} lg={2}>
-              <Card>
-                <CardHeader
-                  className={classes.cardHeader}
-                  titleTypographyProps={{ align: 'center' }}
-                  title='Hygrometer'
-                  />
-                <CardContent>
-                  <Typography gutterBottom variant='h5' component='h2' align='center'>
-                    {`${hygrometer} %`}
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-          </Grid>
-        </section>
-      </main>
+          </section>
+        </main>
+      </MuiThemeProvider>
     );
   }
 }
