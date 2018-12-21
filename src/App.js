@@ -27,7 +27,11 @@ const styles = (theme) => ({
 
 class App extends Component {
   // TODO(SW): Move the client config into a separate file
-  client = new Paho.Client(process.env.REACT_APP_MQTT_BROKER_URL, 8083, 'dashboard');
+  client = new Paho.Client(
+    process.env.REACT_APP_MQTT_BROKER_URL,
+    parseInt(process.env.REACT_APP_MQTT_BROKER_PORT, 10),
+    'bme-dashboard'
+  );
 
   state = {
     thermometer: '',
@@ -72,7 +76,7 @@ class App extends Component {
     this.client.onConnectionLost = this.handleConnectionLost;
     this.client.onMessageArrived = this.handleIncomingMessage;
 
-    this.client.connect({ onSuccess: this.handleSuccessfulConnect, useSSL: true });
+    this.client.connect({ onSuccess: this.handleSuccessfulConnect, useSSL: false });
   }
 
   render() {
