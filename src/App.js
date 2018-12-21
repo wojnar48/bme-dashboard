@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Grid from '@material-ui/core/Grid';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import Paho from 'paho-mqtt';
+import { Typography } from '@material-ui/core';
 
 class App extends Component {
   // TODO(SW): Move the client config into a separate file
@@ -53,11 +58,38 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <div>{`thermometer ${this.state.thermometer}`}</div>
-        <div>{`barometer ${this.state.barometer}`}</div>
-        <div>{`hygrometer ${this.state.hygrometer}`}</div>
-      </div>
+      <main className="App">
+        <CssBaseline />
+        <Grid container justify='center' spacing={40}>
+          <Grid item sm={6} md={4} lg={3}>
+            <Card>
+              <CardContent>
+                <Typography gutterBottom variant='h5' component='h2'>
+                  Temperature
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item sm={6} md={4} lg={3}>
+            <Card>
+              <CardContent>
+                <Typography gutterBottom variant='h5' component='h2'>
+                  Pressure
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item sm={6} md={4} lg={3}>
+            <Card>
+              <CardContent>
+                <Typography gutterBottom variant='h5' component='h2'>
+                  Humidity
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+        </Grid>
+      </main>
     );
   }
 }
