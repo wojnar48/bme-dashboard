@@ -19,9 +19,9 @@ The server runs on an newly provisioned AWS EC2 Ubuntu 16.04 instance. It uses t
 MQTT protocol. Messages to and from the server are encrypted over TLS using `letsencrypt` certificates.
 
 ## TODOs
-* [] Add a gauge to display readings from the SDS011 air quality sensor once it is added to the board
-* [] Implement API logic to store/fetch historical sensor data
-* [] Add a chart to display historical sensor values for the data collected
-* [] Build a weather-resistant case for the hardware that can be mounted outdoors
+* [ ] Add a gauge to display readings from the SDS011 air quality sensor once it is added to the board
+* [ ] Implement API logic to store/fetch historical sensor data
+* [ ] Add a chart to display historical sensor values for the data collected
+* [ ] Build a weather-resistant case for the hardware that can be mounted outdoors
 
 [dashboard_gauges]: docs/images/sensor_gauges.png
