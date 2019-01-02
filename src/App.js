@@ -72,23 +72,22 @@ class App extends Component {
   handleSuccessfulConnect = () => {
     console.log('Connected to MQQT broker');
 
-    this.client.subscribe('bme:thermometer');
-    this.client.subscribe('bme:barometer');
-    this.client.subscribe('bme:hygrometer');
+    this.client.subscribe('bme:gauge');
   };
 
   handleIncomingMessage = (message) => {
     const { topic, payloadString } = message;
 
     switch (topic) {
-      case 'bme:thermometer':
-        this.setState({ thermometer: payloadString });
-        return;
-      case 'bme:barometer':
-        this.setState({ barometer: payloadString });
-        return;
-      case 'bme:hygrometer':
-        this.setState({ hygrometer: payloadString });
+      case 'bme:gauge':
+        const data = JSON.parse(payloadString);
+
+        this.setState({
+          thermometer: data.temperature,
+          barometer: data.pressure,
+          hygrometer: data.humidity,
+        });
+
         return;
       default:
         return;
@@ -106,7 +105,7 @@ class App extends Component {
     this.client.onConnectionLost = this.handleConnectionLost;
     this.client.onMessageArrived = this.handleIncomingMessage;
 
-    this.client.connect({ onSuccess: this.handleSuccessfulConnect, useSSL: true });
+    this.client.connect({ onSuccess: this.handleSuccessfulConnect, useSSL: false });
   }
 
   render() {
